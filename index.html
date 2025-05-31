@@ -2,198 +2,219 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>쿠팡 남김해 2W 근무 시작까지 남은 시간</title>
   <style>
-    :root {
-      --bg-color: #121212;
-      --text-color: #f0f0f0;
-      --accent-color: #2962ff;
-      --danger-color: #ff1744;
-      --font-primary: 'Noto Sans KR', sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
+      font-family: 'Noto Sans KR', sans-serif;
+      text-align: center;
+      background-color: #000;
+      color: #fff;
       margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: var(--font-primary);
-      padding: 2rem 1rem;
-      line-height: 1.5;
+      padding: 20px;
+      line-height: 1.6;
     }
 
-    header {
-      margin-top: 4rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
+    #title {
+      margin-top: 7rem;
+      margin-bottom: 20px;
     }
 
     .title-line1 {
-      font-size: 2.25rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.25rem;
-    }
-
-    .address {
-      font-size: 1.2rem;
-      color: #999;
-      margin-bottom: 0.5rem;
-      user-select: none;
+      font-size: 2rem;
+      font-weight: bold;
     }
 
     .title-line2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--text-color);
+      font-size: 1.6rem;
+      font-weight: bold;
     }
 
-    main {
-      flex: 1;
+    .timer-container {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 1rem;
-      max-width: 500px;
-      width: 100%;
+      gap: 0;
     }
 
     #alarm-icon {
-      font-size: 1.75rem;
-      color: var(--danger-color);
-      animation: blink 1.2s steps(2, start) infinite;
+      font-size: 1.5rem;
+      animation: blink-visibility 1s step-start infinite;
+      color: red;
+      margin-bottom: 2px;
+      line-height: 1;
       user-select: none;
+      display: inline-block;
     }
 
     #timer {
       font-size: 6rem;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      color: var(--text-color);
+      font-weight: bold;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .blinking {
+      color: red !important;
+      animation: blink-visibility 1s step-start infinite;
+    }
+
+    .blinking-icon {
+      animation: blink-visibility 1s step-start infinite;
+      color: red;
+      font-size: 1.5rem;
+      line-height: 1;
       user-select: none;
-      transition: color 0.3s ease;
+      display: inline-block;
     }
 
-    #timer.blinking {
-      color: var(--danger-color);
-      animation: blink 1.2s steps(2, start) infinite;
+    @keyframes blink-visibility {
+      0%, 49% {
+        visibility: visible;
+      }
+      50%, 100% {
+        visibility: hidden;
+      }
     }
 
-    @keyframes blink {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
+    .address {
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+      color: #ccc;
+    }
+
+    img {
+      max-height: 150px;
+      border-radius: 12px;
+    }
+
+    .work-message {
+      margin-top: 10px;
+      font-size: 1.6rem;
+      color: #fff;
+      font-weight: bold;
     }
 
     .progress-bar-container {
-      width: 100%;
-      max-width: 450px;
-      height: 16px;
-      background-color: #333;
-      border-radius: 12px;
+      width: 450px;
+      height: 20px;
+      background-color: #eee;
+      border-radius: 10px;
       overflow: hidden;
-      margin-top: 1.5rem;
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.7);
+      margin-top: 20px;
+      position: relative;
     }
 
     .progress-bar-fill {
       height: 100%;
       width: 0%;
-      background: var(--accent-color);
-      border-radius: 12px 0 0 12px;
-      transition: width 0.4s ease, background-color 0.4s ease;
+      background-color: #0D3BB3;
+      transition: width 0.3s ease, background-color 0.3s ease;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .progress-bar-text {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      pointer-events: none;
+      user-select: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+      z-index: 1;
     }
 
     .progress-bar-danger {
-      background: var(--danger-color);
-    }
-
-    img.logo {
-      max-height: 120px;
-      border-radius: 12px;
-      margin-top: 2rem;
-      user-select: none;
-      filter: drop-shadow(0 0 4px rgba(0,0,0,0.6));
-    }
-
-    .work-message {
-      margin-top: 1rem;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--text-color);
+      background-color: red !important;
     }
 
     @media (max-width: 600px) {
-      header {
-        margin-top: 3rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .title-line1 {
-        font-size: 1.75rem;
-      }
-
-      .address {
-        font-size: 1rem;
-      }
-
-      .title-line2 {
-        font-size: 1.25rem;
-      }
-
-      #alarm-icon {
-        font-size: 1.25rem;
+      #title {
+        margin-top: 6rem;
       }
 
       #timer {
         font-size: 4rem;
       }
 
+      .title-line1 {
+        font-size: 1.5rem;
+      }
+
+      .title-line2 {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+
+      .address {
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .blinking-icon {
+        font-size: 1rem;
+      }
+
       .progress-bar-container {
-        max-width: 100%;
-        height: 12px;
+        width: 90%;
+        height: 16px;
       }
 
       .work-message {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
       }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header>
-    <div class="title-line1">남김해1캠프 소분3(2W)</div>
+  <h1 id="title">
+    <div class="title-line1"></div>
     <div class="address">근무지 주소 : 김해시 안동 163-2 7층</div>
-    <div class="title-line2"><span id="work-date"></span> 근무 시작까지 남은 시간</div>
-  </header>
+    <div class="title-line2">
+      <span id="work-date"></span> 
+      <span> 근무 시작까지 남은 시간</span>
+    </div>
+  </h1>
 
-  <main>
-    <div id="alarm-icon">⏰</div>
+  <div class="timer-container">
+    <div id="alarm-icon" class="blinking-icon">⏰</div>
     <div id="timer">00시간 00분</div>
 
-    <div class="progress-bar-container" aria-label="근무 시작까지 남은 시간 진행률">
-      <div class="progress-bar-fill" id="progress-bar"></div>
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-bar">
+        <span class="progress-bar-text" id="progress-text">00:00:00</span>
+      </div>
     </div>
 
-    <img src="후보2.png" alt="회사 로고" class="logo" />
+    <img src="후보2.png" class="logo" alt="회사 로고" />
     <div class="work-message">근무 잘 부탁드립니다!</div>
-  </main>
+  </div>
 
   <script>
     function formatDate(date) {
       const day = date.getDate().toString().padStart(2, '0');
       return `${day}일`;
+    }
+
+    function getLuminance(r, g, b) {
+      const a = [r, g, b].map((v) => {
+        v /= 255;
+        return v <= 0.03928
+          ? v / 12.92
+          : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+
+    function getContrastTextColor(backgroundColor) {
+      const rgb = backgroundColor.match(/\d+/g).map(Number);
+      const luminance = getLuminance(rgb[0], rgb[1], rgb[2]);
+      return luminance > 0.5 ? '#000000' : '#ffffff';
     }
 
     function updateTimer() {
@@ -206,16 +227,19 @@
       }
 
       const diff = todayTarget - now;
+
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
       const hStr = String(hours).padStart(2, "0");
       const mStr = String(minutes).padStart(2, "0");
+      const sStr = String(seconds).padStart(2, "0");
 
       const timerEl = document.getElementById("timer");
-      timerEl.textContent = `${hStr}시간 ${mStr}분`;
+      timerEl.innerHTML = `${hStr}시간 ${mStr}분`;
 
-      if (diff < 10800000) {
+      if (diff < 3 * 60 * 60 * 1000) {
         timerEl.classList.add("blinking");
       } else {
         timerEl.classList.remove("blinking");
@@ -228,6 +252,7 @@
         displayDate.setDate(displayDate.getDate() + 1);
       }
 
+      document.querySelector(".title-line1").textContent = "남김해1캠프 소분3(2W)";
       document.getElementById("work-date").textContent = formatDate(displayDate);
 
       let start = new Date(todayTarget);
@@ -244,6 +269,12 @@
       } else {
         progressBar.classList.remove("progress-bar-danger");
       }
+
+      const progressText = document.getElementById("progress-text");
+      progressText.textContent = `${hStr}:${mStr}:${sStr}`;
+
+      const computedBgColor = window.getComputedStyle(progressBar).backgroundColor;
+      progressText.style.color = getContrastTextColor(computedBgColor);
     }
 
     setInterval(updateTimer, 1000);
